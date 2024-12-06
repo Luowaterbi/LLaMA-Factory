@@ -1,0 +1,36 @@
+### model
+model_name_or_path: /home/storages/gpu0233/disk3/xzluo/models/Qwen2.5-Coder-14B
+
+### method
+stage: sft
+do_train: true
+finetuning_type: full
+deepspeed: examples/deepspeed/ds_z2_config.json  # choices: [ds_z0_config.json, ds_z2_config.json, ds_z3_config.json]
+
+### dataset
+dataset: $1
+template: qwen
+cutoff_len: 2048
+max_samples: 100000000
+overwrite_cache: true
+preprocessing_num_workers: 32
+
+### output
+output_dir: /home/storages/gpu0233/disk3/xzluo/models/ctf/qwen_$1
+logging_steps: 1
+save_strategy: epoch
+plot_loss: true
+overwrite_output_dir: true
+
+### train
+per_device_train_batch_size: 4
+gradient_accumulation_steps: 16
+learning_rate: 0.00002
+num_train_epochs: 4.0
+lr_scheduler_type: cosine
+warmup_steps: 10
+bf16: true
+ddp_timeout: 180000000
+
+### eval
+eval_strategy: no
